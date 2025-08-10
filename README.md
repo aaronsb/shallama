@@ -414,6 +414,12 @@ Shallama is inspired by Jambi the Genie from Pee-wee's Playhouse, who taught us 
 
 Every time you run `lcp chat`, remember you're summoning a genie - but instead of "Meka-leka-hi-meka-hiney-ho", you're typing commands that bring AI magic to life! ✨
 
+### 🔬 The Science Behind the Magic
+
+Of course, we must admit that all magic is grounded in science, and ours is no different! While it may *feel* like magic when the llama genie responds to your wishes, there's fascinating mathematics and engineering underneath.
+
+**Curious about how the magic really works?** 🤔 Dive into our [comprehensive guide to the science behind LLMs](docs/how-the-magic-works.md) where we reveal the mathematical spells, the attention mechanisms that power understanding, and the clever optimizations that make it all possible on your hardware!
+
 ## 🌟 Acknowledgments
 
 ### Special Thanks
