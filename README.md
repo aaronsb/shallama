@@ -28,6 +28,7 @@ A powerful shell tool for running and managing llama.cpp models with a modern te
 
 - Python 3.11+
 - Docker and Docker Compose
+- pipx (for clean Python tool installation)
 - NVIDIA GPU with CUDA support (optional, CPU mode available)
 
 ### Installation
@@ -40,14 +41,31 @@ cd shallama
 # If you forgot --recursive, summon the submodules:
 git submodule update --init --recursive
 
-# Install the Python CLI tool
+# Install pipx if you don't have it (choose one):
+python3 -m pip install --user pipx      # Install pipx
+# OR on Ubuntu/Debian:
+sudo apt install pipx
+# OR on macOS with Homebrew:
+brew install pipx
+
+# Ensure pipx is in your PATH
+pipx ensurepath
+
+# Install LCP using the magic installer (RECOMMENDED)
 cd lcp-py
-pip install -e .
+./install.sh    # Installs to ~/.local/bin using pipx
 cd ..
+
+# Alternative: Development install (for contributors)
+# cd lcp-py
+# pip install -e .
+# cd ..
 
 # Start the llama.cpp server
 ./start-llamacpp.sh
 ```
+
+✨ **Why pipx?** It creates isolated environments for Python CLI tools, preventing dependency conflicts and keeping your system Python clean!
 
 ### Basic Usage
 
@@ -340,20 +358,31 @@ Key environment variables (set in docker-compose files):
 
 ## 🪄 Development
 
+### Installation Methods
+
+#### For Users (Recommended)
+```bash
+cd lcp-py
+./install.sh      # Uses pipx to install to ~/.local/bin
+```
+
+#### For Developers
+```bash
+cd lcp-py
+pip install -e .  # Editable install for development
+```
+
+#### For Contributors
+```bash
+cd lcp-py
+./dev-install.sh  # Sets up full development environment with venv
+```
+
 ### Running Tests
 
 ```bash
 cd lcp-py
 pytest tests/
-```
-
-### Building and Installing
-
-```bash
-cd lcp-py
-pip install -e .  # Development install
-# or
-pip install .     # Production install
 ```
 
 ## Contributing
