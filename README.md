@@ -1,14 +1,14 @@
 # ✨ Shallama 🦙 ✨
 
 <div align="center">
-  <img src="jambi.jpg" alt="Jambi the Genie" width="300"/>
+  <img src="magical-llama-genie.png" alt="Magical Llama emerging from a genie lamp" width="400"/>
   <br>
-  <em>"Meka-leka-hi-meka-hiney-ho! Your wish is granted!" - Jambi</em>
+  <em>✨ Where llama.cpp meets magical wishes! ✨</em>
 </div>
 
 ## 🪄 The Magic Shell for LLMs
 
-A powerful shell tool for running and managing llama.cpp models with a modern terminal interface, featuring LCP (Language model Command Processor). Just like Jambi grants wishes, Shallama grants your LLM desires! ✨
+A powerful shell tool for running and managing llama.cpp models with a modern terminal interface, featuring LCP (Language model Command Processor). Rub the lamp, summon the llama, and watch your AI wishes come true! 🧞‍♂️
 
 ## ✨ Magical Features ✨
 
@@ -371,10 +371,25 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 MIT License - see LICENSE file for details
 
+## 🎭 Meet Our Magical Inspiration
+
+<div align="center">
+  <img src="jambi.jpg" alt="Jambi the Genie" width="250"/>
+  <br>
+  <em>"Meka-leka-hi-meka-hiney-ho! Your wish is granted!" - Jambi</em>
+</div>
+
+### The Spirit of Jambi Lives On! 🧞
+
+Shallama is inspired by Jambi the Genie from Pee-wee's Playhouse, who taught us that with the right magic words, anything is possible! Just as Jambi granted wishes from his box, our magical llama grants your AI wishes from the command line.
+
+Every time you run `lcp chat`, remember you're summoning a genie - but instead of "Meka-leka-hi-meka-hiney-ho", you're typing commands that bring AI magic to life! ✨
+
 ## 🌟 Acknowledgments
 
-### Special Thanks to Jambi! 🧞
-Inspired by Jambi the Genie from Pee-wee's Playhouse, who reminds us that with the right magic words (and commands), anything is possible!
+### Special Thanks
+- **Jambi the Genie** 🧞 - For teaching us the power of magic words
+- **The magical llama** 🦙 - Emerging from the lamp to grant AI wishes
 
 - [llama.cpp](https://github.com/ggerganov/llama.cpp) - High-performance C++ inference
 - [Rich](https://github.com/Textualize/rich) - Beautiful terminal formatting
