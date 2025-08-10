@@ -4,6 +4,10 @@
 
 Welcome, curious wizard! You've summoned AI genies from digital lamps, but have you wondered about the actual magic behind the curtain? Let's pull back the sparkly veil and reveal the fascinating science that makes our llama genie grant wishes! ✨
 
+## 🗺️ Your Learning Journey
+
+This guide includes links to **friendly explainers** for complex concepts - look for the 📚 icons! Each explainer uses real-world analogies to make AI concepts accessible without heavy math. Whether you're curious about [tensors](magic-explainers/tensors.md) (think photo albums), [vectors](magic-explainers/vectors.md) (think GPS coordinates), or [how words become numbers](magic-explainers/tokenization.md) (think secret decoder rings), we've got you covered!
+
 ## 📚 Table of Contents
 1. [The Spell Book: Loading a Model](#the-spell-book-loading-a-model)
 2. [The Crystal Ball: How Attention Works](#the-crystal-ball-how-attention-works)
@@ -26,7 +30,7 @@ Your GGUF file (e.g., llama-3.2-3b.gguf) → Memory
 
 GGUF (GPT-Generated Unified Format) is a binary format specifically designed for efficient model storage and loading¹. Think of it as a magical tome where:
 - **Header**: Contains metadata (architecture, tokenizer, quantization info)
-- **Tensors**: Model weights stored in quantized formats
+- **[Tensors](magic-explainers/tensors.md)**: Model weights stored in quantized formats (📚 *What are tensors?*)
 - **Memory mapping**: Uses mmap for instant access without loading entire file
 
 When we "load a model":
@@ -47,9 +51,9 @@ When we "load a model":
 ### 2. The Grimoire Structure
 
 Modern LLMs use a **Transformer** architecture with:
-- **Embedding layer**: Converts words to numbers
+- **Embedding layer**: [Converts words to numbers](magic-explainers/tokenization.md) (🔤 *How do words become numbers?*)
 - **Attention layers**: The brain of the operation (more on this below)
-- **Feed-forward layers**: Process and refine understanding
+- **[Feed-forward layers](magic-explainers/feed-forward.md)**: Process and refine understanding (⚙️ *What are feed-forward networks?*)
 - **Output layer**: Produces the next word
 
 ## 🔮 The Crystal Ball: How Attention Works
@@ -83,10 +87,12 @@ Attention(Q, K, V) = softmax(QK^T / √d_k)V
 ```
 
 Where:
-- **Q** (Query): "What am I looking for?" - Matrix of query vectors
-- **K** (Key): "What information is available?" - Matrix of key vectors
-- **V** (Value): "What's the actual content?" - Matrix of value vectors
-- **d_k**: Dimension of key vectors (for scaling)
+- **Q** (Query): "What am I looking for?" - Matrix of query [vectors](magic-explainers/vectors.md)
+- **K** (Key): "What information is available?" - Matrix of key [vectors](magic-explainers/vectors.md)
+- **V** (Value): "What's the actual content?" - Matrix of value [vectors](magic-explainers/vectors.md)
+
+📐 *[What are vectors and why do they matter?](magic-explainers/vectors.md)*
+- **d_k**: [Dimension of key vectors](magic-explainers/vectors.md) (for scaling)
 
 #### Multi-Head Attention: Multiple Crystal Balls
 
@@ -96,19 +102,21 @@ MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O
 where head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)
 ```
 
-Modern models use 8-32 attention heads working in parallel - like having multiple crystal balls each focusing on different aspects (grammar, meaning, context, etc.)!
+Modern models use 8-32 [attention heads](magic-explainers/attention-heads.md) working in parallel - like having multiple crystal balls each focusing on different aspects (grammar, meaning, context, etc.)!
+
+🔮 *[Learn more about attention heads and how they work together](magic-explainers/attention-heads.md)*
 
 ### Why It's Powerful
 
 - **Long-range dependencies**: Can connect "it" in sentence 10 to "llama" in sentence 1
 - **Contextual understanding**: Same word, different meanings based on context
-- **Parallel processing**: All positions computed simultaneously (unlike old RNNs)
+- **Parallel processing**: All positions computed simultaneously ([unlike old RNNs](magic-explainers/rnn-vs-transformers.md))
 
 ## ⚗️ The Alchemy: Token Generation
 
 When you type "Tell me about llamas", here's the alchemical process:
 
-### 1. Tokenization: Breaking Down the Spell
+### 1. [Tokenization](magic-explainers/tokenization.md): Breaking Down the Spell
 
 ```
 "Tell me about llamas" → [Tell] [me] [about] [ll] [amas]
@@ -122,12 +130,14 @@ Your tokens flow through the model like ingredients in a potion:
 
 ```
 Tokens → Embeddings → Layer 1 → Layer 2 → ... → Layer 32 → Output
-         (vectors)    (attend)  (attend)        (attend)   (logits)
+         ([vectors](magic-explainers/vectors.md))    (attend)  (attend)        (attend)   (logits)
 ```
 
 ### 3. The Selection Ritual: Choosing the Next Token
 
-The model doesn't use gradient descent during inference (that's for training). Instead, it uses sophisticated sampling strategies³:
+The model doesn't use [gradient descent](magic-explainers/gradient-descent-training.md) during inference (that's for training). Instead, it uses sophisticated sampling strategies³:
+
+🎯 *[Why is training different from inference?](magic-explainers/gradient-descent-training.md)*
 
 1. **Logits**: Model outputs a score for every possible next token (32,000-128,000 in vocabulary)
 2. **Probabilities**: Apply softmax to convert scores to probabilities
@@ -197,9 +207,9 @@ for each new_token:
   - Without cache: 56.2 seconds
   - With cache: 11.9 seconds
 
-### Quantization: The Shrinking Spell
+### [Quantization](magic-explainers/quantization.md): The Shrinking Spell
 
-Quantization reduces model size by using fewer bits per parameter⁶:
+[Quantization](magic-explainers/quantization.md) reduces model size by using fewer bits per parameter⁶ - like reducing the colors in an image:
 
 #### 4-bit Quantization Magic:
 - **Original (FP32)**: 4 bytes per parameter
