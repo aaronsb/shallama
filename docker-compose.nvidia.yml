@@ -1,0 +1,38 @@
+services:
+  llamacpp:
+    image: ghcr.io/ggml-org/llama.cpp:server-cuda
+    container_name: llamacpp
+    ports:
+      - "11434:8080"
+    volumes:
+      - ./models:/models
+    environment:
+      # GPU Configuration optimized for RTX 4060 Ti (16GB VRAM)
+      - CUDA_VISIBLE_DEVICES=0
+      # Performance optimizations for i9-14900K
+      - OMP_NUM_THREADS=16
+    command: >
+      -m /models/model.gguf
+      -c 8192
+      -b 512
+      -ngl 999
+      -t 16
+      -tb 16
+      --host 0.0.0.0
+      --port 8080
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+        limits:
+          memory: 32G
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s

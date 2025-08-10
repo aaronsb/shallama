@@ -1,0 +1,3 @@
+[submodule "lcp-py"]
+	path = lcp-py
+	url = https://github.com/aaronsb/lcp-py.git

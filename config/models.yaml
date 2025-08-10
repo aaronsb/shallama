@@ -1,0 +1,13 @@
+# LlamaCP Model Configuration
+# Test model configuration
+
+models:
+  qwen2.5-7b:
+    path: "/models/qwen2.5-7b-instruct-q4_k_m.gguf"
+    n_gpu_layers: 35      # Should fit well in 16GB VRAM
+    n_ctx: 8192           # Context length
+    temperature: 0.7      # Sampling temperature
+    top_p: 0.9
+    repeat_penalty: 1.1
+
+default_model: "qwen2.5-7b"

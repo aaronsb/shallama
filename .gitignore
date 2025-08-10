@@ -1,0 +1,94 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+.tox/
+.nox/
+.hypothesis/
+*.cover
+*.log
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Models (large files)
+models/*.gguf
+models/*.bin
+models/*.safetensors
+
+# Docker
+docker-compose.override.yml
+
+# Config
+config/local.yaml
+config/*.local.yaml
+
+# Cache and data
+.cache/
+*.cache
+tmp/
+temp/
+
+# LCP specific
+lcp-py/.cache/
+lcp-py/.local/
+lcp-py/.config/local/
+
+# Claude AI
+.claude/
+.claude-tracking
+.github-tracking
+.claude-github/
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# OS files
+Thumbs.db
+.directory
+
+# Lock files (keep package lock files)
+!package-lock.json
+!poetry.lock
+!Pipfile.lock

@@ -1,0 +1,194 @@
+#!/bin/bash
+
+# LlamaCP Helper Script - Compatible with Ollama commands
+# Provides model management for llama.cpp container
+
+set -e
+
+# Check if Docker is running and llamacpp container exists
+check_container() {
+    if ! docker ps -q -f name=llamacpp &>/dev/null; then
+        echo "Error: LlamaCP container is not running."
+        echo "Start it with: ./start-llamacpp.sh"
+        exit 1
+    fi
+}
+
+# Function to list available models
+list_models() {
+    echo "📋 Available models in LlamaCP:"
+    if [ -d "./models" ] && [ "$(ls -A ./models 2>/dev/null)" ]; then
+        echo ""
+        echo "Local models:"
+        find ./models -name "*.gguf" -exec basename {} \; | sort
+    else
+        echo "No models found in ./models directory"
+        echo "Add .gguf files to ./models/ to use them"
+    fi
+    
+    echo ""
+    echo "📄 Model configuration: ./config/models.yaml"
+}
+
+# Function to test API connection
+test_api() {
+    echo "🧪 Testing LlamaCP API connection..."
+    if curl -s -f http://localhost:11434/health > /dev/null; then
+        echo "✅ API is responding"
+        echo "📊 Server info:"
+        curl -s http://localhost:11434/api/version 2>/dev/null || echo "Version info not available"
+    else
+        echo "❌ API is not responding"
+        echo "Check container status with: docker compose logs"
+        exit 1
+    fi
+}
+
+# Function to show container logs
+show_logs() {
+    echo "📜 LlamaCP container logs:"
+    docker compose logs --tail=50 -f llamacpp
+}
+
+# Function to restart the container
+restart_container() {
+    echo "🔄 Restarting LlamaCP container..."
+    docker compose restart llamacpp
+    echo "✅ Container restarted"
+}
+
+# Function to stop the container
+stop_container() {
+    echo "🛑 Stopping LlamaCP container..."
+    docker compose down
+    echo "✅ Container stopped"
+}
+
+# Function to show container status
+show_status() {
+    echo "📊 LlamaCP Status:"
+    echo ""
+    docker compose ps
+    echo ""
+    if docker ps -q -f name=llamacpp &>/dev/null; then
+        echo "🔍 Container health:"
+        docker inspect llamacpp --format='{{.State.Health.Status}}' 2>/dev/null || echo "Health check not available"
+        echo ""
+        echo "📈 Resource usage:"
+        docker stats --no-stream llamacpp 2>/dev/null || echo "Stats not available"
+    fi
+}
+
+# Function to pull/download models (placeholder for future implementation)
+pull_model() {
+    local model_name="$1"
+    echo "📥 Model pulling not yet implemented for LlamaCP"
+    echo "To add models:"
+    echo "1. Download .gguf files to ./models/ directory"
+    echo "2. Update ./config/models.yaml configuration"
+    echo "3. Restart container with: docker compose restart"
+    echo ""
+    echo "Popular model sources:"
+    echo "- Hugging Face: huggingface.co/models?library=gguf"
+    echo "- Ollama format: Use ollama export to convert existing models"
+}
+
+# Function to run interactive session (placeholder)
+run_model() {
+    local model_name="$1"
+    echo "🤖 Interactive model running not yet implemented"
+    echo "Use the API endpoint instead:"
+    echo "curl -X POST http://localhost:11434/api/generate \\"
+    echo "  -H 'Content-Type: application/json' \\"
+    echo "  -d '{\"model\":\"$model_name\",\"prompt\":\"Your prompt here\"}'"
+}
+
+# Function to show help
+show_help() {
+    cat << EOF
+🦙 LlamaCP - llama.cpp Docker Management Tool
+
+USAGE:
+    ./llamacpp <command> [arguments]
+
+COMMANDS:
+    list, ls           List available models
+    pull <model>       Download a model (placeholder)
+    run <model>        Run interactive session (placeholder)  
+    test              Test API connection
+    logs              Show container logs
+    restart           Restart the container
+    stop              Stop the container
+    status            Show container status and stats
+    help              Show this help message
+
+EXAMPLES:
+    ./llamacpp list
+    ./llamacpp test
+    ./llamacpp logs
+    ./llamacpp status
+
+API ENDPOINT:
+    http://localhost:11434 (Ollama-compatible)
+
+CONFIGURATION:
+    Models: ./models/
+    Config: ./config/models.yaml
+    
+For more information, see README.md
+EOF
+}
+
+# Main command dispatcher
+main() {
+    case "${1:-help}" in
+        "list"|"ls")
+            list_models
+            ;;
+        "pull")
+            if [ -z "$2" ]; then
+                echo "Error: Model name required"
+                echo "Usage: ./llamacpp pull <model_name>"
+                exit 1
+            fi
+            pull_model "$2"
+            ;;
+        "run")
+            if [ -z "$2" ]; then
+                echo "Error: Model name required"
+                echo "Usage: ./llamacpp run <model_name>"
+                exit 1
+            fi
+            check_container
+            run_model "$2"
+            ;;
+        "test")
+            check_container
+            test_api
+            ;;
+        "logs")
+            check_container
+            show_logs
+            ;;
+        "restart")
+            restart_container
+            ;;
+        "stop")
+            stop_container
+            ;;
+        "status")
+            show_status
+            ;;
+        "help"|"--help"|"-h")
+            show_help
+            ;;
+        *)
+            echo "Unknown command: $1"
+            echo "Run './llamacpp help' for usage information"
+            exit 1
+            ;;
+    esac
+}
+
+# Run main function with all arguments
+main "$@"
